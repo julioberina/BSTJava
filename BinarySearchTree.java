@@ -24,7 +24,7 @@ class BinarySearchTree
         public void setLeftChild(BSTNode child) { left = child; }
         public void setRightChild(BSTNode child) { right = child; }
 
-        // convenience method
+        // convenience methods
         public boolean hasLeftChild() { return (this.left != null); }
         public boolean hasRightChild() { return (this.right != null); }
         public boolean hasLeftChildOnly() { return (hasLeftChild() && this.right == null); }
@@ -39,7 +39,7 @@ class BinarySearchTree
     public BinarySearchTree()
     {
         root = null;
-        maxNode = new BSTNode(2147483647);
+        maxNode = new BSTNode(Integer.MAX_VALUE); // create node containing maximum integer value
         maxNode.setLeftChild(root);
     }
 
@@ -110,7 +110,7 @@ class BinarySearchTree
 
     private boolean deleteNode(BSTNode currentNode, int value)
     {
-        if (value <= currentNode.getData()) // = for if max integer is inserted
+        if (value <= currentNode.getData()) // = is for the case max integer is inserted
         {
             if (currentNode.getLeftChild() == null)
                 return false;
@@ -136,7 +136,7 @@ class BinarySearchTree
                     removeLeaf(currentNode.getLeftChild(), swapper);
                 }
 
-                root = maxNode.getLeftChild();
+                root = maxNode.getLeftChild(); // in case it was a root deletion
                 return true;
             }
             else
@@ -166,7 +166,7 @@ class BinarySearchTree
                     removeLeaf(currentNode.getRightChild(), swapper);
                 }
 
-                root = maxNode.getLeftChild();
+                root = maxNode.getLeftChild(); // in case it was a root deletion
                 return true;
             }
             else
