@@ -56,10 +56,8 @@ public class Project1
                 }
             }
             else if (input[0].equalsIgnoreCase("H"))
-            {
                 displayOptions();
-            }
-            else
+            else if (!input[0].equalsIgnoreCase("E")) // anything else but the defaults
                 System.out.println("Must make valid input!");
             
             System.out.print("\n");
