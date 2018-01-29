@@ -64,6 +64,11 @@ class BinarySearchTree
             return deleteNode(maxNode, value);
     }
 
+    public boolean sucOf(int[] ref)
+    {
+	return successor(root, ref);
+    }
+
     public void preOrderPrint()
     {
         preOrderTraverse(root);
@@ -174,6 +179,35 @@ class BinarySearchTree
         }
     }
 
+    private boolean successor(BSTNode currentNode, int[] ref)
+    {
+	if (currentNode != null)
+        {
+	    if (ref[0] < currentNode.getData())
+		return successor(currentNode.getLeftChild(), ref);
+	    else if (ref[0] > currentNode.getData())
+		return successor(currentNode.getRightChild(), ref);
+	    else
+	    {
+		BSTNode sucNode = null;
+
+		if (currentNode.hasRightChild())
+		    sucNode = leftMostNode(currentNode.getRightChild());
+		else
+		    sucNode = lastLeft(root, null, ref);
+
+		if (sucNode != null)
+		    ref[0] = sucNode.getData();
+		else
+		    return false;
+		
+		return true;
+	    }
+	}
+	else
+	    return false;
+    }
+
     private void removeLeaf(BSTNode currentNode, BSTNode targetNode)
     {
         if (currentNode != null)
@@ -188,6 +222,29 @@ class BinarySearchTree
                 removeLeaf(currentNode.getRightChild(), targetNode);
             }
         }
+    }
+
+    private BSTNode lastLeft(BSTNode currentNode, BSTNode lastLeftNode, int[] ref)
+    {
+	if (currentNode == null)
+	    return null;
+	else
+	{
+	    if (ref[0] < currentNode.getData())
+		return lastLeft(currentNode.getLeftChild(), currentNode, ref);
+	    else if (ref[0] > currentNode.getData())
+		return lastLeft(currentNode.getRightChild(), lastLeftNode, ref);
+	    else
+		return lastLeftNode;
+	}
+    }
+
+    private BSTNode leftMostNode(BSTNode currentNode)
+    {
+	if (!currentNode.hasLeftChild())
+	    return currentNode;
+	else
+	    return leftMostNode(currentNode.getLeftChild());
     }
 
     private BSTNode rightMostNode(BSTNode currentNode)

@@ -55,6 +55,21 @@ public class Project1
                         System.out.println("Value is not in tree!");
                 }
             }
+	    else if (input[0].equalsIgnoreCase("S"))
+	    {
+		if (input.length == 1)
+		    System.out.println("Must use successor with a value!");
+		else
+		{
+		    int[] numref = new int[1];
+		    numref[0] = Integer.parseInt(input[1]);
+
+		    if (bst.sucOf(numref))
+			System.out.println(numref[0]);
+		    else
+			System.out.println(numref[0] + " does not exist or have a successor!");
+		}
+	    }
             else if (input[0].equalsIgnoreCase("H"))
                 displayOptions();
             else if (!input[0].equalsIgnoreCase("E")) // anything else but the defaults
