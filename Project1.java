@@ -55,6 +55,21 @@ public class Project1
                         System.out.println("Value is not in tree!");
                 }
             }
+	    else if (input[0].equalsIgnoreCase("P"))
+	    {
+		if (input.length == 1)
+		    System.out.println("Must use predecessor with a value!");
+		else
+		{
+		    int[] numref = new int[1];
+		    numref[0] = Integer.parseInt(input[1]);
+
+		    if (bst.preOf(numref))
+			System.out.println(numref[0]);
+		    else
+			System.out.println(numref[0] + " does not exist or have a predecessor!");
+		}
+	    }
 	    else if (input[0].equalsIgnoreCase("S"))
 	    {
 		if (input.length == 1)
