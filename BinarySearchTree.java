@@ -108,10 +108,14 @@ class BinarySearchTree
 	 */
     public boolean delete(int value)
     {
+		boolean[] result = new boolean[1];
+		result[0] = false;
+
         if (root == null)
             return false;
-        else
-            return deleteNode(maxNode, value);
+        
+		deleteNode(root, value, result);
+		return result[0];
     }
 
 	/*
@@ -203,70 +207,33 @@ class BinarySearchTree
 	  not in the tree in other words). Otherwise, it implements the proper algorithm to delete the
 	  node from the tree.
 	 */
-    private boolean deleteNode(BSTNode currentNode, int value)
-    {
-        if (value <= currentNode.getData()) // = is for the case Integer.MAX_VALUE is inserted
-        {
-            if (currentNode.getLeftChild() == null)
-                return false;
-            else if (currentNode.getLeftChild().getData() == value)
-            {
-                BSTNode swapper = null; // node with value to replace currentNode's value
+    private BSTNode deleteNode(BSTNode currentNode, int value, boolean[] found)
+	{
+		if(currentNode == null)
+			return null;
+		
+		if (currentNode.getData() > value) 
+			currentNode.setLeftChild(deleteNode(currentNode.getLeftChild(), value, found));
+		else if (currentNode.getData() < value) 
+			currentNode.setRightChild(deleteNode(currentNode.getRightChild(), value, found));
+		else
+		{
+			found[0] = true;
 
-                if (currentNode.getLeftChild().isLeaf())
-                {
-                    if (currentNode.getLeftChild() == root)
-                        root = null;
-                    else
-                        currentNode.setLeftChild(null);
-                }
-                else if (currentNode.getLeftChild().hasLeftChildOnly()) // has left child but no right child
-                    currentNode.setLeftChild(currentNode.getLeftChild().getLeftChild());
-                else if (currentNode.getLeftChild().hasRightChildOnly()) // has right child but no left child
-                    currentNode.setLeftChild(currentNode.getLeftChild().getRightChild());
-                else // has left and right child
-                {
-                    swapper = rightMostNode(currentNode.getLeftChild().getLeftChild());
-                    currentNode.getLeftChild().setData(swapper.getData());
-                    removeLeaf(currentNode.getLeftChild(), swapper); // delete the duplicate of currentNode
-                }
+			if (currentNode.isLeaf())
+				return null;
+			else if (currentNode.hasLeftChildOnly())
+				return currentNode.getLeftChild();
+			else if (currentNode.hasRightChildOnly())
+				return currentNode.getRightChild();
+			
+			BSTNode swapper = rightMostNode(currentNode.getLeftChild());
+			int data = swapper.getData();
+			deleteNode(currentNode.getLeftChild(), data, found);
+			currentNode.setData(data);
+		}
 
-                root = maxNode.getLeftChild(); // in case it was a root deletion
-                return true;
-            }
-            else
-                return deleteNode(currentNode.getLeftChild(), value);
-        }
-        else
-        {
-            if (currentNode.getRightChild() == null)
-                return false;
-            else if (currentNode.getRightChild().getData() == value)
-            {
-                BSTNode swapper = null; // node with value to replace currentNode's value
-
-                if (currentNode.getRightChild().isLeaf())
-                {
-                    currentNode.setRightChild(null);
-                    return true;
-                }
-                else if (currentNode.getRightChild().hasLeftChildOnly()) // has left child but no right child
-                    currentNode.setRightChild(currentNode.getRightChild().getLeftChild());
-                else if (currentNode.getRightChild().hasRightChildOnly()) // has right child but no left child
-                    currentNode.setRightChild(currentNode.getRightChild().getRightChild());
-                else // has left and right child
-                {
-                    swapper = rightMostNode(currentNode.getRightChild().getLeftChild());                    
-                    currentNode.getRightChild().setData(swapper.getData());
-                    removeLeaf(currentNode.getRightChild(), swapper); // delete the duplicate of currentNode
-                }
-
-                root = maxNode.getLeftChild(); // in case it was a root deletion
-                return true;
-            }
-            else
-                return deleteNode(currentNode.getRightChild(), value);
-        }
+		return currentNode;
     }
 
 	/*
