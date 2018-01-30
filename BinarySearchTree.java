@@ -26,7 +26,7 @@ class BinarySearchTree
         }
 
         /* Getters */
-		
+
 		// returns the node's data attribute
         public int getData() { return data; }
 
@@ -43,7 +43,7 @@ class BinarySearchTree
 
 		// sets the left child of the node to BSTNode supplied in param
         public void setLeftChild(BSTNode child) { left = child; }
-		
+
 		// sets the right child of the node to BSTNode supplied in param
         public void setRightChild(BSTNode child) { right = child; }
 
@@ -67,7 +67,7 @@ class BinarySearchTree
 
     private BSTNode root;
     private BSTNode maxNode; // for deletion purposes;
-    
+
     /* standard public methods of BST */
 
 	/*
@@ -113,7 +113,7 @@ class BinarySearchTree
 
         if (root == null)
             return false;
-        
+
 		deleteNode(root, value, result);
 		return result[0];
     }
@@ -121,7 +121,7 @@ class BinarySearchTree
 	/*
 	  This method is a boolean which takes an integer array param typically with a size of 1 since
 	  it wraps one integer to emulate pass-by-reference like functionality. It returns true while
-	  replacing the value in the array with the data attribute of its predecessor node or false if the 
+	  replacing the value in the array with the data attribute of its predecessor node or false if the
 	  node with the value either does not exist or have a predecessor
 	 */
     public boolean preOf(int[] ref)
@@ -131,8 +131,8 @@ class BinarySearchTree
 
 	/*
 	  This method is a boolean which takes an integer array param typically with a size of 1 since
-	  it wraps one integer to emulate pass-by-reference like functionality. It returns true while 
-	  replacing the value in the array with the data attribute of its successor node or false if the 
+	  it wraps one integer to emulate pass-by-reference like functionality. It returns true while
+	  replacing the value in the array with the data attribute of its successor node or false if the
 	  node with the value either does not exist or have a predecessor
 	 */
     public boolean sucOf(int[] ref)
@@ -148,7 +148,7 @@ class BinarySearchTree
         preOrderTraverse(root);
         System.out.print("\n");
     }
-    
+
 	/*
 	  This method simply prints the binary search tree in an in-order manner.
 	 */
@@ -166,7 +166,7 @@ class BinarySearchTree
         postOrderTraverse(root);
         System.out.print("\n");
     }
-    
+
     /* private methods used by public methods */
 
 	/*
@@ -193,7 +193,7 @@ class BinarySearchTree
                 currentNode.setRightChild(new BSTNode(value));
             else
                 return insertNode(currentNode.getRightChild(), value);
-            
+
             return true;
         }
 
@@ -201,7 +201,7 @@ class BinarySearchTree
     }
 
 	/*
-	  This method is a boolean that takes a node and an integer.  It looks for the node whose child 
+	  This method is a boolean that takes a node and an integer.  It looks for the node whose child
 	  contains the value to delete from the tree while traversing the tree in an in-order manner.  It
 	  return false when the child in which the direction of the traversal goes towards is null (value
 	  not in the tree in other words). Otherwise, it implements the proper algorithm to delete the
@@ -211,10 +211,10 @@ class BinarySearchTree
 	{
 		if(currentNode == null)
 			return null;
-		
-		if (currentNode.getData() > value) 
+
+		if (currentNode.getData() > value)
 			currentNode.setLeftChild(deleteNode(currentNode.getLeftChild(), value, found));
-		else if (currentNode.getData() < value) 
+		else if (currentNode.getData() < value)
 			currentNode.setRightChild(deleteNode(currentNode.getRightChild(), value, found));
 		else
 		{
@@ -226,11 +226,11 @@ class BinarySearchTree
 				return currentNode.getLeftChild();
 			else if (currentNode.hasRightChildOnly())
 				return currentNode.getRightChild();
-			
+
 			BSTNode swapper = rightMostNode(currentNode.getLeftChild());
 			int data = swapper.getData();
-			deleteNode(currentNode.getLeftChild(), data, found);
-			currentNode.setData(data);
+      currentNode.setData(data);
+			currentNode.setLeftChild(deleteNode(currentNode.getLeftChild(), data, found));
 		}
 
 		return currentNode;
@@ -253,17 +253,17 @@ class BinarySearchTree
 			else
 			{
 				BSTNode preNode = null;
-				
+
 				if (currentNode.hasLeftChild())
 					preNode = rightMostNode(currentNode.getLeftChild());
 				else
 					preNode = lastRight(root, null, ref);
-				
+
 				if (preNode != null)
 					ref[0] = preNode.getData();
 				else
 					return false;
-				
+
 				return true;
 			}
 		}
@@ -288,17 +288,17 @@ class BinarySearchTree
 			else
 			{
 				BSTNode sucNode = null;
-				
+
 				if (currentNode.hasRightChild())
 					sucNode = leftMostNode(currentNode.getRightChild());
 				else
 					sucNode = lastLeft(root, null, ref);
-				
+
 				if (sucNode != null)
 					ref[0] = sucNode.getData();
 				else
 					return false;
-				
+
 				return true;
 			}
 		}
@@ -307,8 +307,8 @@ class BinarySearchTree
     }
 
 	/*
-	  This method takes two nodes, currentNode and targetNode.  It knows from the start that 
-	  targetNode is a leaf.  It simply traverses the tree to to check which of the currentNode's 
+	  This method takes two nodes, currentNode and targetNode.  It knows from the start that
+	  targetNode is a leaf.  It simply traverses the tree to to check which of the currentNode's
 	  children points to targetNode.  Once targetNode is located, currentNode removes reference
 	  of that node to be deleted
 	 */
@@ -369,7 +369,7 @@ class BinarySearchTree
 				return lastRightNode;
 		}
     }
-	
+
 	/*
 	  This method takes a node param to start from and returns the leftmost node from there
 	 */
@@ -380,7 +380,7 @@ class BinarySearchTree
 		else
 			return leftMostNode(currentNode.getLeftChild());
     }
-	
+
 	/*
 	  This method takes a node param to start from and returns the rightmost node from there
 	 */
@@ -391,7 +391,7 @@ class BinarySearchTree
         else
             return rightMostNode(currentNode.getRightChild());
     }
-    
+
 	/*
 	  This method prints all the values of the tree through a pre-order traversal.
 	 */
@@ -404,7 +404,7 @@ class BinarySearchTree
             preOrderTraverse(currentNode.getRightChild());
         }
     }
-	
+
 	/*
 	  This method prints all the values of the tree through an in-order traversal.
 	 */
