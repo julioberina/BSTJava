@@ -214,11 +214,25 @@ class BinarySearchTree
 			found[0] = true;
 
 			if (currentNode.isLeaf())
+            {
+                if (currentNode == root)
+                    root = null;
+
 				return null;
+            }
 			else if (currentNode.hasLeftChildOnly())
+            {
+                if (currentNode == root)
+                    root = root.getLeftChild();
+
 				return currentNode.getLeftChild();
+            }
 			else if (currentNode.hasRightChildOnly())
+            {
+                if (currentNode == root)
+                    root = root.getRightChild();
 				return currentNode.getRightChild();
+            }
 
 			BSTNode swapper = rightMostNode(currentNode.getLeftChild());
 			int data = swapper.getData();
