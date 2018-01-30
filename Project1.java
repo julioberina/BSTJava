@@ -7,29 +7,29 @@ Project Due Date: Jan 30
 import java.util.Scanner;
 
 /*
-This is the main class for the entire project which contains the main method
-and a few other methods used in main
+  This is the main class for the entire project which contains the main method
+  and a few other methods used in main
 */
 public class Project1
 {
-
+	
 	/*
 	  This is the main method that simply takes command-line arguments
 	  and where the entire program lives in
-	 */
+	*/
     public static void main(String[] args)
     {
         Scanner scan = new Scanner(System.in);
         BinarySearchTree bst = new BinarySearchTree();
         System.out.println("Please enter the sequence of values:  ");
-
+		
         // make an array of strings by chopping the spaces for separation
         String[] strSeq = scan.nextLine().trim().split(" +");
         System.out.print("\n");
-      
+		
         // for command input later
         String[] input = { "", "" };
-
+		
         for (String str : strSeq)
             bst.insert(Integer.parseInt(str));
         
@@ -40,7 +40,7 @@ public class Project1
         System.out.print("Post-order:  ");
         bst.postOrderPrint();
         System.out.print("\n");
-
+		
         while (!input[0].equalsIgnoreCase("E"))
         {
             System.out.print("Command?  ");
@@ -113,7 +113,7 @@ public class Project1
 	
 	/*
 	  This is a method that displays the choices a user has to interact with the binary search tree or the program in general
-	 */
+	*/
     public static void displayOptions()
     {
         String[] cmd = { "I", "D", "P", "S", "E", "H" };
